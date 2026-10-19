@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" App Information"
+            android:layout_marginTop="32dp"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Application Name: Medical Adherence App
+
+Version: 1.0
+
+Platform: Android
+
+Database: SQLite
+
+Target SDK: 36
+
+Purpose:
+To assist users in managing medication schedules and improving medication adherence."
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+</ScrollView>

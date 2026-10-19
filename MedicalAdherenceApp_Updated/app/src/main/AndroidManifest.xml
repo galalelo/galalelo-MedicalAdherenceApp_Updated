@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/app_logo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/app_logo"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MedicalAdherenceApp">
+        <activity
+            android:name=".activities.DeveloperInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AppInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.TermsOfUseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.PrivacyPolicyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AboutAccountActivity"
+            android:exported="false" />
+
+        <receiver
+            android:name=".utils.NotificationReceiver"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.DashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.MedicationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AddMedicationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.EditMedicationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.MedicationDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ConfirmMedicationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.NotificationsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ForgotPasswordActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.AboutActivity"
+            android:exported="false" />
+    </application>
+
+</manifest>

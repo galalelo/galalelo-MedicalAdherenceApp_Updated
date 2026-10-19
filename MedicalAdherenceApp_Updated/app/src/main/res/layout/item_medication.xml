@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="6dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="18dp">
+        <TextView android:id="@+id/txtMedicationName" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Medication" android:textColor="#000000" android:textSize="22sp" android:textStyle="bold" />
+        <TextView android:id="@+id/txtDosage" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:textColor="#000000" android:textSize="16sp" />
+        <TextView android:id="@+id/txtTime" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:textColor="#000000" android:textSize="16sp" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:orientation="horizontal">
+            <Button android:id="@+id/btnEditMedication" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:backgroundTint="#42A5F5" android:text="Edit" android:textColor="#FFFFFF" />
+            <Space android:layout_width="12dp" android:layout_height="wrap_content" />
+            <Button android:id="@+id/btnDeleteMedication" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:backgroundTint="#E53935" android:text="Delete" android:textColor="#FFFFFF" />
+        </LinearLayout>
+        <Button android:id="@+id/btnRecordDose" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:backgroundTint="#4CAF50" android:text="Record dose" android:textColor="#FFFFFF" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

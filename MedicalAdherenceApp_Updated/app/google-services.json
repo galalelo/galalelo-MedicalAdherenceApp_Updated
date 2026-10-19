@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "404058041372",
+    "project_id": "medical-adherence-android-app",
+    "storage_bucket": "medical-adherence-android-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:404058041372:android:226f77f6cf33de079903d9",
+        "android_client_info": {
+          "package_name": "com.group4.medicaladherenceapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhr3Czt6cqHUJ_vyCx5EpE4sneFqapFE0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

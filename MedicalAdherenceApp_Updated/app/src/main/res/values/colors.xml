@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="primary">#1976D2</color>
+    <color name="primary_dark">#0D47A1</color>
+    <color name="accent">#42A5F5</color>
+
+    <color name="background">#FFFFFF</color>
+
+    <color name="white">#FFFFFF</color>
+
+    <color name="text_dark">#000000</color>
+
+    <color name="text_light">#000000</color>
+
+    <color name="success">#4CAF50</color>
+
+    <color name="warning">#FF9800</color>
+
+    <color name="danger">#E53935</color>
+
+</resources>

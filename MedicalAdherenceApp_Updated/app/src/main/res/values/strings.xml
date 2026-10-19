@@ -1,0 +1,13 @@
+<resources>
+
+    <string name="app_name">Medical Adherence App</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="welcome">Welcome Back</string>
+
+    <!-- Replace with the Web application OAuth client ID from Firebase/Google Cloud. -->
+    <string name="google_web_client_id">REPLACE_WITH_WEB_CLIENT_ID.apps.googleusercontent.com</string>
+
+</resources>
