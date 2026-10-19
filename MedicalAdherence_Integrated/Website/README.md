@@ -1,5 +1,8 @@
 # Medical Adherence Website — Firebase sync
 
+##YOUTUBE LINK
+https://youtu.be/Dql67IUweag
+
 This PHP-rendered website uses the same Firebase project, Firebase Authentication, and Cloud Firestore paths as the Android app. It does not use SQLite or the retired PHP bearer-token API for authentication or app data.
 
 ## Shared Firestore schema
@@ -41,3 +44,6 @@ Review the selected project before deploying. Add the website domain to Firebase
 Website sign-up creates a Firebase Auth account and a `users/{uid}` profile. Email/password and Google sign-in use Firebase Auth. Profile edits, medication create/edit/delete, daily adherence logs, and notifications use the same nested Firestore collections and field shapes as Android. Password recovery uses Firebase Auth. The website reminder checker reads the signed-in user's medications and writes reminder notifications into their `notifications` collection.
 
 The previous SQLite API, PHP Google OAuth callback, and SQLite reminder endpoints are retired. Firestore Security Rules are the access-control boundary for private health data; deploy and test them before production use. Use HTTPS and test with two separate accounts to confirm data isolation.
+
+##YOUTUBE LINK
+https://youtu.be/Dql67IUweag
