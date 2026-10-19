@@ -1,0 +1,58 @@
+# Azure Pipelines - Medical Adherence Android app (Kotlin + Firebase)
+# The Android project sits at the repository root (gradlew, settings.gradle, app/).
+
+trigger:
+  branches:
+    include:
+      - main
+
+pr:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  # google-services.json is git-ignored, so it is stored in
+  # Pipelines > Library > Secure files and downloaded here.
+  - task: DownloadSecureFile@1
+    name: googleServices
+    displayName: Download google-services.json
+    inputs:
+      secureFile: google-services.json
+
+  - script: cp "$(googleServices.secureFilePath)" app/google-services.json
+    displayName: Place google-services.json in app/
+
+  # local.properties in the repo points at a Windows SDK path; point it at the agent's SDK.
+  - script: echo "sdk.dir=$ANDROID_HOME" > local.properties
+    displayName: Point Gradle at the Android SDK
+
+  - script: chmod +x gradlew
+    displayName: Make gradlew executable
+
+  - task: Gradle@3
+    displayName: Build debug APK and run unit tests
+    inputs:
+      gradleWrapperFile: gradlew
+      tasks: assembleDebug testDebugUnitTest
+      options: --no-daemon --stacktrace
+      publishJUnitResults: true
+      testResultsFiles: '**/build/test-results/**/TEST-*.xml'
+      javaHomeOption: JDKVersion
+      jdkVersion: '1.17'
+
+  - task: CopyFiles@2
+    displayName: Collect APK
+    inputs:
+      sourceFolder: app/build/outputs/apk/debug
+      contents: '**/*.apk'
+      targetFolder: $(Build.ArtifactStagingDirectory)
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish APK artifact
+    inputs:
+      pathToPublish: $(Build.ArtifactStagingDirectory)
+      artifactName: debug-apk
