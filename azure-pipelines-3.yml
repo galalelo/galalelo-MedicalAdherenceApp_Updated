@@ -1,0 +1,70 @@
+# Azure Pipelines — Medical Adherence Android app (Kotlin + Firebase)
+
+trigger:
+  branches:
+    include:
+      - main
+
+pr:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  # Add google-services.json under Pipelines > Library > Secure files,
+  # and authorize it for this pipeline.
+  - task: DownloadSecureFile@1
+    name: googleServices
+    displayName: Download google-services.json
+    inputs:
+      secureFile: google-services.json
+
+  - script: cp "$(googleServices.secureFilePath)" "MedicalAdherenceApp_Updated/app/google-services.json"
+    displayName: Place google-services.json in Android app
+
+  - task: JavaToolInstaller@0
+    displayName: Use JDK 17
+    inputs:
+      versionSpec: '17'
+      jdkArchitectureOption: x64
+      jdkSourceOption: PreInstalled
+
+  - script: |
+      echo "sdk.dir=$ANDROID_HOME" > local.properties
+      chmod +x ./gradlew
+      java -version
+    workingDirectory: MedicalAdherenceApp_Updated
+    displayName: Configure Android SDK and verify Java
+
+  - script: ./gradlew --no-daemon --stacktrace testDebugUnitTest assembleDebug
+    workingDirectory: MedicalAdherenceApp_Updated
+    displayName: Run unit tests and build debug APK
+
+  - task: PublishTestResults@2
+    displayName: Publish Android unit test results
+    condition: always()
+    inputs:
+      testResultsFormat: JUnit
+      searchFolder: $(System.DefaultWorkingDirectory)/MedicalAdherenceApp_Updated
+      testResultsFiles: '**/build/test-results/testDebugUnitTest/TEST-*.xml'
+      mergeTestResults: true
+      failTaskOnFailedTests: true
+      testRunTitle: Android unit tests
+
+  - task: CopyFiles@2
+    displayName: Collect debug APK
+    inputs:
+      sourceFolder: $(System.DefaultWorkingDirectory)/MedicalAdherenceApp_Updated/app/build/outputs/apk/debug
+      contents: '**/*.apk'
+      targetFolder: $(Build.ArtifactStagingDirectory)
+      flattenFolders: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish debug APK artifact
+    inputs:
+      pathToPublish: $(Build.ArtifactStagingDirectory)
+      artifactName: debug-apk
+      publishLocation: Container
