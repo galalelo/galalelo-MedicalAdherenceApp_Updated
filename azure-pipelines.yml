@@ -1,5 +1,4 @@
-# Azure Pipelines - Medical Adherence Android app (Kotlin + Firebase)
-# The Android project sits at the repository root (gradlew, settings.gradle, app/).
+# Azure Pipelines — Medical Adherence Android app (Kotlin + Firebase)
 
 trigger:
   branches:
@@ -15,44 +14,49 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-  # google-services.json is git-ignored, so it is stored in
-  # Pipelines > Library > Secure files and downloaded here.
+  # Add google-services.json under Pipelines > Library > Secure files,
+  # and authorize it for this pipeline.
   - task: DownloadSecureFile@1
     name: googleServices
     displayName: Download google-services.json
     inputs:
       secureFile: google-services.json
 
-  - script: cp "$(googleServices.secureFilePath)" app/google-services.json
-    displayName: Place google-services.json in app/
+  - script: cp "$(googleServices.secureFilePath)" "MedicalAdherenceApp_Updated/app/google-services.json"
+    displayName: Place google-services.json in Android app
 
-  # local.properties in the repo points at a Windows SDK path; point it at the agent's SDK.
-  - script: echo "sdk.dir=$ANDROID_HOME" > local.properties
-    displayName: Point Gradle at the Android SDK
+  - script: |
+      echo "sdk.dir=$ANDROID_HOME" > local.properties
+      chmod +x ./gradlew
+    workingDirectory: MedicalAdherenceApp_Updated
+    displayName: Configure Android SDK and Gradle wrapper
 
-  - script: chmod +x gradlew
-    displayName: Make gradlew executable
+  - script: ./gradlew --no-daemon --stacktrace testDebugUnitTest assembleDebug
+    workingDirectory: MedicalAdherenceApp_Updated
+    displayName: Run unit tests and build debug APK
 
-  - task: Gradle@3
-    displayName: Build debug APK and run unit tests
+  - task: PublishTestResults@2
+    displayName: Publish Android unit test results
+    condition: always()
     inputs:
-      gradleWrapperFile: gradlew
-      tasks: assembleDebug testDebugUnitTest
-      options: --no-daemon --stacktrace
-      publishJUnitResults: true
-      testResultsFiles: '**/build/test-results/**/TEST-*.xml'
-      javaHomeOption: JDKVersion
-      jdkVersion: '1.17'
+      testResultsFormat: JUnit
+      searchFolder: $(System.DefaultWorkingDirectory)/MedicalAdherenceApp_Updated
+      testResultsFiles: '**/build/test-results/testDebugUnitTest/TEST-*.xml'
+      mergeTestResults: true
+      failTaskOnFailedTests: true
+      testRunTitle: Android unit tests
 
   - task: CopyFiles@2
-    displayName: Collect APK
+    displayName: Collect debug APK
     inputs:
-      sourceFolder: app/build/outputs/apk/debug
+      sourceFolder: $(System.DefaultWorkingDirectory)/MedicalAdherenceApp_Updated/app/build/outputs/apk/debug
       contents: '**/*.apk'
       targetFolder: $(Build.ArtifactStagingDirectory)
+      flattenFolders: true
 
   - task: PublishBuildArtifacts@1
-    displayName: Publish APK artifact
+    displayName: Publish debug APK artifact
     inputs:
       pathToPublish: $(Build.ArtifactStagingDirectory)
       artifactName: debug-apk
+      publishLocation: Container
